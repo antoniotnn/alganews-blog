@@ -1,6 +1,7 @@
 import Head from 'next/head'
 import FeaturedPost from "../components/FeaturedPost";
 import {Post, PostService} from "tnn-sdk";
+import {GetServerSideProps} from "next";
 
 interface HomeProps {
     posts: Post.Paginated;
@@ -31,8 +32,11 @@ export default function Home(props: HomeProps) {
   )
 }
 
-export async function getServerSideProps() {
-    const posts = await PostService.getAllPosts({ page: 0 });
+export const getServerSideProps: GetServerSideProps<HomeProps> = async (context) => {
+    const {page} = context.query;
+
+    const posts = await PostService.getAllPosts({ page: Number(page) - 1 });
+
 
     return {
         props: {
