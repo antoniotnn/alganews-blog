@@ -3,17 +3,14 @@ import FeaturedPost from "../components/FeaturedPost";
 import {Post, PostService} from "tnn-sdk";
 import {GetServerSideProps} from "next";
 import {ServerResponse} from "node:http";
+import PostCard from "../components/PostCard";
+import PostsGrid from "../components/PostsGrid";
 
 interface HomeProps {
     posts?: Post.Paginated;
 }
 
 export default function Home(props: HomeProps) {
-    // const [posts, setPosts] = useState<Post.Paginated>();
-    //
-    // useEffect(() => {
-    //     PostService.getAllPosts({ page: 0 }).then(setPosts);
-    // }, []);
 
     const {posts} = props;
     
@@ -25,9 +22,14 @@ export default function Home(props: HomeProps) {
                 <link rel="icon" href="/favicon.ico" />
             </Head>
 
-            {
-                posts?.content && <FeaturedPost postSummary={posts?.content[0]} />
-            }
+            {posts?.content && <FeaturedPost postSummary={posts?.content[0]} />}
+            <PostsGrid>
+                {posts?.content?.slice(1).map(post => {
+                    return (
+                        <PostCard key={post.id} post={post} />
+                    )
+                })}
+            </PostsGrid>
 
         </div>
   )
