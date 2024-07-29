@@ -35,6 +35,7 @@ export default function Home(props: HomeProps) {
             </PostsGrid>
 
             <ReactPaginate
+                containerClassName={'Pagination'}
                 pageCount={posts?.totalPages || 0}
                 marginPagesDisplayed={0}
                 pageRangeDisplayed={3}
