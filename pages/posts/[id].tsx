@@ -3,15 +3,22 @@ import {GetServerSideProps} from "next";
 import {Post, PostService} from "tnn-sdk";
 
 interface PostProps {
-    post?: Post.Detailed
+    post?: Post.Detailed;
+    error?: {
+        message: string
+    }
 }
 
 export default function PostPage(props: PostProps) {
+    if (props.error) {
+        return <div style={{color: 'red'}}>{props.error.message}</div>
+    }
     return <div>{props.post?.title}</div>
 }
 
 interface Params extends ParsedUrlQuery {
     id: string;
+
 }
 
 export const getServerSideProps: GetServerSideProps<PostProps, Params> = async ({ params }) => {
@@ -31,9 +38,14 @@ export const getServerSideProps: GetServerSideProps<PostProps, Params> = async (
                 post
             }
         }
-    } catch (err) {
+    } catch (error) {
+        console.log(error);
         return  {
-            props: {}
+            props: {
+                error: {
+                    message: error.message
+                }
+            }
         }
     }
 }
