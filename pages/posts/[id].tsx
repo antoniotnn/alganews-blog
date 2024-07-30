@@ -2,23 +2,16 @@ import {ParsedUrlQuery} from "querystring";
 import {GetServerSideProps} from "next";
 import {Post, PostService} from "tnn-sdk";
 
-interface PostProps {
+interface PostProps extends NextPageProps {
     post?: Post.Detailed;
-    error?: {
-        message: string
-    }
 }
 
 export default function PostPage(props: PostProps) {
-    if (props.error) {
-        return <div style={{color: 'red'}}>{props.error.message}</div>
-    }
     return <div>{props.post?.title}</div>
 }
 
 interface Params extends ParsedUrlQuery {
     id: string;
-
 }
 
 export const getServerSideProps: GetServerSideProps<PostProps, Params> = async ({ params }) => {
