@@ -1,6 +1,7 @@
 import {ParsedUrlQuery} from "querystring";
 import {GetServerSideProps} from "next";
 import {Post, PostService} from "tnn-sdk";
+import {ResourceNotFoundError} from "tnn-sdk/dist/errors";
 
 interface PostProps extends NextPageProps {
     post?: Post.Detailed;
@@ -32,7 +33,9 @@ export const getServerSideProps: GetServerSideProps<PostProps, Params> = async (
             }
         }
     } catch (error) {
-        console.log(error);
+        if (error instanceof ResourceNotFoundError) {
+            return { notFound: true };
+        }
         return  {
             props: {
                 error: {
