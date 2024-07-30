@@ -36,7 +36,8 @@ export const getServerSideProps: GetServerSideProps<PostProps, Params> = async (
         return  {
             props: {
                 error: {
-                    message: error.message
+                    message: error.message,
+                    statusCode: error.data?.status || 500
                 }
             }
         }
