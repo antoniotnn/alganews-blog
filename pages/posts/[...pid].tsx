@@ -12,7 +12,7 @@ export default function PostPage(props: PostProps) {
 }
 
 interface Params extends ParsedUrlQuery {
-    id: string;
+    pid: string[];
 }
 
 export const getServerSideProps: GetServerSideProps<PostProps, Params> = async ({ params }) => {
@@ -20,7 +20,7 @@ export const getServerSideProps: GetServerSideProps<PostProps, Params> = async (
     try {
         if (!params) return { notFound: true };
 
-        const { id } = params;
+        const [ id, slug] = params.pid;
         const postId = Number(id);
 
         if (isNaN(postId)) return { notFound: true };
