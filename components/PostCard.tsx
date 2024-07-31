@@ -3,6 +3,7 @@ import styled from "styled-components";
 import {transparentize} from "polished";
 import Image from "next/image";
 import Link from "next/link";
+import formatPostDate from "../core/utils/formatPostDate";
 
 interface PostCardProps {
     post: Post.Summary;
@@ -18,7 +19,7 @@ export default function PostCard(props: PostCardProps) {
                     <Editor>
                         <EditorImage src={post.editor.avatarUrls.small} width={64} height={64} />
                     </Editor>
-                    <PublishDate>há 3 dias</PublishDate>
+                    <PublishDate>{formatPostDate(post.createdAt)}</PublishDate>
                     <Title>{ post.title }</Title>
                 </Info>
             </Wrapper>
