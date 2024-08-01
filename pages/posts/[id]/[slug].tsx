@@ -4,6 +4,7 @@ import { ParsedUrlQuery } from "querystring";
 import { ResourceNotFoundError } from "tnn-sdk/dist/errors";
 import Head from "next/head";
 import PostHeader from "../../../components/PostHeader";
+import Markdown from "../../../components/Markdown";
 
 interface PostProps extends NextPageProps {
     post?: Post.Detailed;
@@ -28,6 +29,9 @@ export default function PostPage(props: PostProps) {
                         editor={post?.editor}
                         title={post?.title}
                     />
+                    <Markdown>
+                        { post.body }
+                    </Markdown>
                 </>
             )}
         </>
