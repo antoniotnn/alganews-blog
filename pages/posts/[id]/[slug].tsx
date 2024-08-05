@@ -1,4 +1,5 @@
 import { Post, PostService } from "tnn-sdk";
+import { DiscussionEmbed } from "disqus-react";
 import { GetServerSideProps } from "next";
 import { ParsedUrlQuery } from "querystring";
 import { ResourceNotFoundError } from "tnn-sdk/dist/errors";
@@ -36,9 +37,16 @@ export default function PostPage(props: PostProps) {
                         editor={post?.editor}
                         title={post?.title}
                     />
-                    <Markdown>
-                        { post.body }
-                    </Markdown>
+                    <Markdown>{ post.body }</Markdown>
+                    <DiscussionEmbed
+                        shortname="alganewstnn-disqus-com"
+                        config={{
+                            url: `http://${props.host}/${props.post?.id}/${props.post?.slug}`,
+                            identifier: String(post.id),
+                            title: post.title,
+                            language: 'pt_BR'
+                        }}
+                    />
                 </>
             )}
         </>
