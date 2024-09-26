@@ -9,7 +9,7 @@ import Footer from "../components/Footer";
 import Content from "../components/content";
 import ProgressBar from "@badrap/bar-of-progress";
 import Router from "next/router";
-
+import '../httpConfig';
 
 interface CustomAppProps extends NextPageProps {}
 
