@@ -59,16 +59,18 @@ interface Params extends ParsedUrlQuery {
 }
 
 export const getServerSideProps: GetServerSideProps<PostProps, Params> =
-    async ({ params, req }) => {
+    async ({ params, res, req, query }) => {
         try {
             if (!params) return { notFound: true };
 
             const { id } = params;
             const postId = Number(id);
 
+            const { token } = query;
+
             if (isNaN(postId)) return { notFound: true };
 
-            const post = await PostService.getExistingPost(postId);
+            const post = await PostService.getExistingPost(postId, token as string);
 
             return {
                 props: {
